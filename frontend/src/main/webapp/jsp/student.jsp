@@ -17,13 +17,11 @@
          height="150" class="image_centre">
     <h5  align="center">a.belavsky97@gmail.com</h5>
     <h5  align="center">Статус: Студент</h5>
-    <form class="form-horizontal m-t-0" action="/logout" method="post">
-        <div class="form-group text-right">
-            <div class="col-xs-12" align="center">
-                <button class="btn btn-primary w-md" type="submit">Выйти</button>
-            </div>
+    <div class="form-group text-right">
+        <div class="col-xs-12" align="center">
+            <a href="/logout"><button class="btn btn-primary w-md">Выйти</button></a>
         </div>
-    </form>
+    </div>
 </aside>
 <!--Main Content -->
 <section class="content">

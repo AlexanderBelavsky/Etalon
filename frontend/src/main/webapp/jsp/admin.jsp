@@ -27,6 +27,9 @@
                         <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">Создать</a>
                         </li>
                         <li class=""><a href="#messages" data-toggle="tab" aria-expanded="true">Добавить заявку</a>
+                        <li class="">
+                            <a href="/logout"><button class="btn btn-primary w-md">Выйти</button></a>
+                        </li>
                     </ul>
 
                     <!-- Tab panes -->
