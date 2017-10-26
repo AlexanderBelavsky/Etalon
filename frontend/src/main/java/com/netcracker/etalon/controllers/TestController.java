@@ -22,14 +22,27 @@
  * All rights reserved.
  */
 package com.netcracker.etalon.controllers;
-
-import com.netcracker.etalon.beans.UserViewModel;
+import com.netcracker.devschool.dev4.etalon.entity.User;
+import com.netcracker.devschool.dev4.etalon.repository.UserRepository;
+import com.netcracker.devschool.dev4.etalon.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,44 +55,108 @@ import java.util.List;
 @Controller
 public class TestController {
 
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
+    public ModelAndView defaultPage() {
+
+        ModelAndView model = new ModelAndView();
+        model.addObject("title", "Spring Security Login Form - Database Authentication");
+        model.addObject("message", "This is default page!");
+        model.setViewName("hello");
+        return model;
+
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String goToLoginPage() {
-        return "login";
-    }
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+                              @RequestParam(value = "logout", required = false) String logout) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-    @RequestMapping(value = "/loginnew", method = RequestMethod.GET)
-    public String goTologinPage() {
-        return "loginnew";
-    }
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
 
-    @RequestMapping(value = "/loginnew", method = RequestMethod.POST)
-    public String goToStudentPage(@RequestParam("email") String email,
-                                  @RequestParam("password") String pass) {
-        String view = "loginnew";
+    /* The user is logged in :) */
+            String role = auth.getAuthorities().toString();
 
-        switch (email){
-            case "stud@mail.com" : view="student";  break;
-            case "teacher@mail.com":view= "head_of_practice"; break;
-            case "admin@mail.com":view= "admin"; break;
+            String targetUrl = "";
+            if (role.contains("STUDENT")) {
+                targetUrl = "/student";
+            } else if (role.contains("HOP")) {
+                targetUrl = "/hop";
+            } else if (role.contains("ADMIN")) {
+                targetUrl = "/admin";
+            }
+
+            return new ModelAndView("redirect:" + targetUrl);
+
         }
-        return view;
+
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", "Invalid username and password!");
+        }
+
+        if (logout != null) {
+            model.addObject("msg", "You've been logged out successfully.");
+        }
+        model.setViewName("loginnew");
+
+        return model;
+
+    }
+
+    @RequestMapping(value = "/student", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public String pageStudent() {
+        return "student";
+    }
+
+    @RequestMapping(value = "/hop", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_HOP')")
+    public String pageHop() {
+        return "head_of_practice";
+    }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String pageAdmin() {
+        return "admin";
+    }
+
+    //for 403 access denied page
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public ModelAndView accesssDenied() {
+
+        ModelAndView model = new ModelAndView();
+
+        //check if user is login
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            model.addObject("username", userDetail.getUsername());
+        }
+
+        model.setViewName("403");
+        return model;
 
     }
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String goTologinnewPage() {
-        return "loginnew";
-    }
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String goToregisterPage() {
         return "register";
     }
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public String returnToregisterPage() {
-        return "loginnew";
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
 
-    @RequestMapping(value = "/users-view", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/users-view", method = RequestMethod.GET)
     public ModelAndView getUsersAsModelWithView() {
 
         ModelAndView modelAndView = new ModelAndView();
@@ -104,7 +181,7 @@ public class TestController {
         userViewModels.add(userViewModelIvan);
         userViewModels.add(userViewModelLeopold);
         return userViewModels;
-    }
+    }*/
 
 
 }
