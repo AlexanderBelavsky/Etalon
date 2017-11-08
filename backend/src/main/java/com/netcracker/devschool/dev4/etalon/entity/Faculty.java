@@ -1,5 +1,6 @@
 package com.netcracker.devschool.dev4.etalon.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,6 +10,7 @@ import javax.persistence.Table;
 public class Faculty {
     @Id
     private int idFaculty;
+    @Column(name="name_of_faculty")
     private String faculty_name;
 
     public int getIdFaculty() {

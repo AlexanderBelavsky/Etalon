@@ -12,7 +12,7 @@ public class Student {
     private int idSpeciality;
     private String form_of_Education;
     private int group_number;
-    private double avarge_score;
+    private double av_score;
     private String first_name;
     private String last_name;
     private String imageurl;
@@ -72,12 +72,12 @@ public class Student {
         this.group_number = group_number;
     }
 
-    public double getAvarge_score() {
-        return avarge_score;
+    public double getAv_score() {
+        return av_score;
     }
 
-    public void setAvarge_score(double avarge_score) {
-        this.avarge_score = avarge_score;
+    public void setAv_score(double av_score) {
+        this.av_score = av_score;
     }
 
     public String getFirst_name() {
@@ -103,4 +103,5 @@ public class Student {
     public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
     }
+
 }
