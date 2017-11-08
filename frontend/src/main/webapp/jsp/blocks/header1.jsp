@@ -57,6 +57,7 @@
 <script src="resources/js/libs/form_advanced_demo.js"></script>
 <script src="resources/js/libs/jquery.dataTables.min.js"></script>
 <script src="resources/js/libs/dataTables.bootstrap.js"></script>
+<script src="resources/js/libs/jquery.form.min.js"></script>
 
 
 
