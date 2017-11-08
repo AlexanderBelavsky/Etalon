@@ -15,4 +15,6 @@ public interface UserService {
     public User update(User user) throws Exception;
 
     public User findById(long id);
+
+    public int getIdByName(String name);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.netcracker.devschool.dev4.etalon.repository.User_roleRepository;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserRepository userRepository;
 
+
+    @Resource
+    private User_roleRepository userRolesRepository;
 
     @Override
     @Transactional
@@ -53,6 +57,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User findById(long id) {
         return userRepository.findOne((int) id);
+    }
+
+    @Override
+    public int getIdByName(String name) {
+        return userRolesRepository.findByUsername(name).getUser_role_id();
     }
 }
 
