@@ -1877,6 +1877,14 @@ pre code {
 .col-xs-12 {
     width: 100%
 }
+.col-xs-17{
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-left: 15px
+
+}
 
 .col-xs-11 {
     width: 91.66666667%
