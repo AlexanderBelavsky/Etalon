@@ -22,8 +22,13 @@
  * All rights reserved.
  */
 package com.netcracker.etalon.controllers;
+import com.netcracker.devschool.dev4.etalon.entity.Head_of_practice;
+import com.netcracker.devschool.dev4.etalon.entity.Student;
 import com.netcracker.devschool.dev4.etalon.entity.User;
 import com.netcracker.devschool.dev4.etalon.repository.UserRepository;
+import com.netcracker.devschool.dev4.etalon.service.FacultyService;
+import com.netcracker.devschool.dev4.etalon.service.Head_of_practiceService;
+import com.netcracker.devschool.dev4.etalon.service.StudentService;
 import com.netcracker.devschool.dev4.etalon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
@@ -54,9 +59,18 @@ import java.util.List;
  */
 @Controller
 public class TestController {
-
     @Autowired
     private UserService userService;
+
+
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private Head_of_practiceService headOfPracticeService;
+
+    @Autowired
+    private FacultyService facultyService;
 
     @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
     public ModelAndView defaultPage() {
@@ -108,14 +122,40 @@ public class TestController {
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_STUDENT')")
-    public String pageStudent() {
-        return "student";
+    public ModelAndView pageStudent() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        ModelAndView model = new ModelAndView();
+        String name = auth.getName();
+        int id = userService.getIdByName(name);
+        Student student = studentService.findById(id);
+        if (student != null) {
+            model.addObject("name", student.getFirst_name() + " " + student.getLast_name());
+            model.addObject("imageUrl", "images/" + student.getImageurl());
+            model.addObject("id", student.getIdStudent());
+            model.addObject("faculties", facultyService.findAll());
+        }
+        model.setViewName("student");
+        return model;
     }
+
 
     @RequestMapping(value = "/hop", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_HOP')")
-    public String pageHop() {
-        return "head_of_practice";
+    public ModelAndView pageHop() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        ModelAndView model = new ModelAndView();
+        String name = auth.getName();
+        int id = userService.getIdByName(name);
+        Head_of_practice headOfPractice = headOfPracticeService.findById(id);
+        if (headOfPractice != null) {
+            model.addObject("name", headOfPractice.getFirst_name() + " " + headOfPractice.getLast_name());
+            model.addObject("imageUrl", "images/" + headOfPractice.getImageurl());
+            model.addObject("company", headOfPractice.getCompany());
+            model.addObject("id", headOfPractice.getIdhead_of_practice());
+            model.addObject("faculties", facultyService.findAll());
+        }
+        model.setViewName("head_of_practice");
+        return model;
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -154,7 +194,6 @@ public class TestController {
         }
         return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
-
 
    /* @RequestMapping(value = "/users-view", method = RequestMethod.GET)
     public ModelAndView getUsersAsModelWithView() {
