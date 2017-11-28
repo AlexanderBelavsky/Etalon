@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.netcracker.devschool.dev4.etalon.entity.User_role;
 import com.netcracker.devschool.dev4.etalon.repository.User_roleRepository;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User create(User user) {
-        User createdUser = user;
-        return userRepository.save(createdUser);
+    public User_role create(User user, User_role userRoles) {
+
+        userRepository.save(user);
+        return userRolesRepository.save(userRoles);
     }
 
     @Override

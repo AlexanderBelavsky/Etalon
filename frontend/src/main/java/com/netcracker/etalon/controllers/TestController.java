@@ -25,6 +25,7 @@ package com.netcracker.etalon.controllers;
 import com.netcracker.devschool.dev4.etalon.entity.Head_of_practice;
 import com.netcracker.devschool.dev4.etalon.entity.Student;
 import com.netcracker.devschool.dev4.etalon.entity.User;
+import com.netcracker.devschool.dev4.etalon.entity.User_role;
 import com.netcracker.devschool.dev4.etalon.repository.UserRepository;
 import com.netcracker.devschool.dev4.etalon.service.FacultyService;
 import com.netcracker.devschool.dev4.etalon.service.Head_of_practiceService;
@@ -193,6 +194,35 @@ public class TestController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ModelAndView registerStudent(@RequestParam(value = "username") String username,
+                                        @RequestParam(value = "password") String password) {
+        User user = new User();
+        user.setUsername(username);
+        // password = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
+        user.setPassword(password);
+        user.setEnabled(1);
+        User_role userRoles = new User_role();
+        userRoles.setUsername(username);
+        userRoles.setRole("ROLE_STUDENT");
+        int id = userService.create(user, userRoles).getUser_role_id();
+        Student student = new Student();
+        student.setIdStudent(id);
+        student.setFirst_name("");
+        student.setLast_name("");
+        student.setImageurl("student_default_avatar.png");
+        student.setGroup_number(100000);
+        student.setAv_score(10);
+        student.setForm_of_Education("");
+        student.setIdFaculty(1);
+        student.setIdSpeciality(1);
+        studentService.create(student);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("msg", "Вы были успешно зарегистрированы. Теперь вы можете войти с ипользованием указанного логина и пароля");
+        modelAndView.setViewName("loginnew");
+        return modelAndView;
     }
 
    /* @RequestMapping(value = "/users-view", method = RequestMethod.GET)
