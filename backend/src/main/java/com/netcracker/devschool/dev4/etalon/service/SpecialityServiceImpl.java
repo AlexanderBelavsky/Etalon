@@ -18,6 +18,11 @@ public class SpecialityServiceImpl implements SpecialityService {
     }
 
     @Override
+    public void deleteSpecialityById(int id){
+        specialityRepository.delete(id);
+    }
+
+    @Override
     public Speciality delete(int idSpeciality) throws Exception {
         if (specialityRepository.exists(idSpeciality)) {
             Speciality deleted = specialityRepository.findOne(idSpeciality);

@@ -10,6 +10,52 @@
 <head>
     <title>Title</title>
     <jsp:include page="/jsp/blocks/header1.jsp"/>
+    <script>
+        function adminPageInit() {
+            $('#tfaculty').DataTable({
+                //"processing": true,
+                //"serverSide": true,
+                //'autoWidth': false,
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+                //"ajax": "admin/tableAllFaculty"
+            });
+            $('#tgroups').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            });
+            $('#faculty_edit').ajaxForm({
+                dataType: 'json',
+                success: function (data) {
+                    if (data) {
+                        $('#faculty').text($("#faculties option[value='" + data.idFaculty + "']").text());
+                        $('#success').css('display', 'block');
+                    } else {
+                        $('#error').css('display', 'block');
+                    }
+                }
+            });
+            $('#speciality_edit').ajaxForm({
+                dataType: 'json',
+                success: function (data) {
+                    if (data) {
+                        $('#faculty').text($("#faculties option[value='" + data.idFaculty + "']").text());
+                        $('#success').css('display', 'block');
+                    } else {
+                        $('#error').css('display', 'block');
+                    }
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <div class="col-md-12">
@@ -28,7 +74,9 @@
                         </li>
                         <li class=""><a href="#messages" data-toggle="tab" aria-expanded="true">Добавить заявку</a>
                         <li class="">
-                            <a href="/logout"><button class="btn btn-primary w-md">Выйти</button></a>
+                            <a href="/logout">
+                                <button class="btn btn-primary w-md">Выйти</button>
+                            </a>
                         </li>
                     </ul>
 
@@ -126,7 +174,9 @@
                                                             <div class="modal-content">
                                                                 <!-- Заголовок модального окна -->
                                                                 <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-hidden="true">×
+                                                                    </button>
                                                                     <h4 class="modal-title">Зачисление на практику</h4>
                                                                 </div>
                                                                 <!-- Основное содержимое модального окна -->
@@ -135,24 +185,34 @@
                                                                         <div class="col-sm-12">
                                                                             <div class="panel panel-default">
                                                                                 <div class="panel-heading">
-                                                                                    <h3 class="panel-title" align="center">Назначение на практику</h3>
+                                                                                    <h3 class="panel-title"
+                                                                                        align="center">Назначение на
+                                                                                        практику</h3>
                                                                                 </div>
                                                                                 <div class="panel-body">
-                                                                                    <form class="form-horizontal" role="form">
+                                                                                    <form class="form-horizontal"
+                                                                                          role="form">
                                                                                         <div class="form-group">
-                                                                                            <label class="col-md-2 control-label">Название практики</label>
+                                                                                            <label class="col-md-2 control-label">Название
+                                                                                                практики</label>
                                                                                             <div class="col-md-10">
-                                                                                                <input type="text" class="form-control" placeholder="Названиме">
+                                                                                                <input type="text"
+                                                                                                       class="form-control"
+                                                                                                       placeholder="Названиме">
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="form-group">
-                                                                                            <label class="col-md-2 control-label">Название компании</label>
+                                                                                            <label class="col-md-2 control-label">Название
+                                                                                                компании</label>
                                                                                             <div class="col-md-10">
-                                                                                                <input type="text" class="form-control" placeholder="Компания">
+                                                                                                <input type="text"
+                                                                                                       class="form-control"
+                                                                                                       placeholder="Компания">
                                                                                             </div>
                                                                                         </div>
 
-                                                                                        <button type="submit" class="btn btn-purple">
+                                                                                        <button type="submit"
+                                                                                                class="btn btn-purple">
                                                                                             Применить
                                                                                         </button>
                                                                                     </form>
@@ -258,7 +318,9 @@
                                                             <div class="modal-content">
                                                                 <!-- Заголовок модального окна -->
                                                                 <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-hidden="true">×
+                                                                    </button>
                                                                     <h4 class="modal-title">Зачисление на практику</h4>
                                                                 </div>
                                                                 <!-- Основное содержимое модального окна -->
@@ -267,24 +329,32 @@
                                                                         <div class="col-sm-12">
                                                                             <div class="panel panel-default">
                                                                                 <div class="panel-heading">
-                                                                                    <h3 class="panel-title" align="center">Данные студента для зачисления</h3>
+                                                                                    <h3 class="panel-title"
+                                                                                        align="center">Данные студента
+                                                                                        для зачисления</h3>
                                                                                 </div>
                                                                                 <div class="panel-body">
-                                                                                    <form class="form-horizontal" role="form">
+                                                                                    <form class="form-horizontal"
+                                                                                          role="form">
                                                                                         <div class="form-group">
                                                                                             <label class="col-md-2 control-label">Фамилия</label>
                                                                                             <div class="col-md-10">
-                                                                                                <input type="text" class="form-control" placeholder="Фамилия">
+                                                                                                <input type="text"
+                                                                                                       class="form-control"
+                                                                                                       placeholder="Фамилия">
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="form-group">
                                                                                             <label class="col-md-2 control-label">Имя</label>
                                                                                             <div class="col-md-10">
-                                                                                                <input type="text" class="form-control" placeholder="Имя">
+                                                                                                <input type="text"
+                                                                                                       class="form-control"
+                                                                                                       placeholder="Имя">
                                                                                             </div>
                                                                                         </div>
 
-                                                                                        <button type="submit" class="btn btn-purple">
+                                                                                        <button type="submit"
+                                                                                                class="btn btn-purple">
                                                                                             Применить
                                                                                         </button>
                                                                                     </form>

@@ -9,6 +9,8 @@ public interface SpecialityService {
 
     Speciality delete(int id) throws Exception;
 
+    public void deleteSpecialityById(int id);
+
     List<Speciality> findAll();
 
     Speciality update(Speciality speciality) throws Exception;

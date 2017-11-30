@@ -18,6 +18,11 @@ public class FacultyServiceImpl  implements FacultyService {
     }
 
     @Override
+    public void deleteFacultyById(int id){
+        facultyRepository.delete(id);
+    }
+
+    @Override
     public Faculty delete(int idFaculty) throws Exception {
         if (facultyRepository.exists(idFaculty)) {
             Faculty deleted = facultyRepository.findOne(idFaculty);
