@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page session="true" %>
 <html>
 <head>
     <title>Title</title>
@@ -57,7 +59,7 @@
         }
     </script>
 </head>
-<body>
+<body onload="adminPageInit()">
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-12">
@@ -457,49 +459,219 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title" align="center">Создать университет</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <form class="form-horizontal" role="form">
-                                                <div class="form-group">
-                                                    <label class="col-md-2 control-label">Название университета</label>
-                                                    <div class="col-md-10">
-                                                        <input type="text" class="form-control" placeholder="Название">
-                                                    </div>
-                                                </div>
+                                            <h3 class="panel-title" align="center">Факультеты</h3>
 
-                                                <button type="submit" class="btn btn-purple">
-                                                    Применить
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title" align="center">Создать факультет</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <form class="form-horizontal" role="form">
-                                                <div class="form-group">
-                                                    <label class="col-md-2 control-label">Название факультета</label>
-                                                    <div class="col-md-10">
-                                                        <input type="text" class="form-control" placeholder="Название">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <table id="tfaculty"
+                                                           class="table table-striped table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Название</th>
+                                                            <th>Удалить</th>
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <c:forEach items="${faculties}" var="item">
+                                                            <tr>
+                                                                <td>${item.getFaculty_name()}</td>
+                                                                <td>
+                                                                    <a href=" <c:url value='/admin/deleteFaculty/${item.getIdFaculty()}'/> "><button
+                                                                            type="button"
+                                                                            class="btn btn-block btn-danger">
+                                                                        Удалить
+                                                                    </button></a>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                                <div class="panel-body">
+
+                                                    <a href="#myModal2" class="btn btn-primary" data-toggle="modal">Создать</a>
+                                                    <!-- HTML-код модального окна-->
+                                                    <div id="myModal2" class="modal fade">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <!-- Заголовок модального окна -->
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-hidden="true">×
+                                                                    </button>
+                                                                    <h4 class="modal-title">Новый факультет</h4>
+                                                                </div>
+                                                                <!-- Основное содержимое модального окна -->
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="panel panel-default">
+                                                                                <div class="panel-heading">
+                                                                                    <h3 class="panel-title"
+                                                                                        align="center">Создание
+                                                                                        факультета</h3>
+                                                                                </div>
+                                                                                <div class="panel-body">
+                                                                                    <form class="form-horizontal"
+                                                                                          role="form"
+                                                                                          action="admin/addFaculty"
+                                                                                          id="faculty_edit"
+                                                                                          method="post"
+                                                                                          accept-charset="windows1251">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-md-2 control-label">Название
+                                                                                                факультета</label>
+                                                                                            <div class="col-md-10">
+                                                                                                <input type="text"
+                                                                                                       class="form-control"
+                                                                                                       placeholder="Названиме"
+                                                                                                       name="faculty_name">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <input type="hidden"
+                                                                                               name="${_csrf.parameterName}"
+                                                                                               value="${_csrf.token}"/>
+                                                                                        <button type="submit"
+                                                                                                class="btn btn-purple">
+                                                                                            Применить
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-purple">
-                                                    Применить
-                                                </button>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title" align="center">Специальность</h3>
+
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <table id="tgroups"
+                                                           class="table table-striped table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Название</th>
+                                                            <th>Факультет</th>
+                                                            <th>Удалить</th>
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <c:forEach items="${specialities}" var="spec">
+                                                            <tr>
+                                                                <td>${spec.getSpeciality_name()}</td>
+                                                                <td>${faculties.stream().filter(faculty -> faculty.getIdFaculty()==spec.getIdFaculty()).findFirst().get().getFaculty_name()}</td>
+                                                                <td>
+                                                                    <a href=" <c:url value='/admin/deleteSpeciality/${spec.getIdSpeciality()}'/> "><button
+                                                                            type="button"
+                                                                            class="btn btn-block btn-danger">
+                                                                        Удалить
+                                                                    </button></a>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                                <div class="panel-body">
+
+                                                    <a href="#myModal3" class="btn btn-primary" data-toggle="modal">Создать</a>
+                                                    <!-- HTML-код модального окна-->
+                                                    <div id="myModal3" class="modal fade">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <!-- Заголовок модального окна -->
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-hidden="true">×
+                                                                    </button>
+                                                                    <h4 class="modal-title">Новая специальность</h4>
+                                                                </div>
+                                                                <!-- Основное содержимое модального окна -->
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="panel panel-default">
+                                                                                <div class="panel-heading">
+                                                                                    <h3 class="panel-title"
+                                                                                        align="center">Создание
+                                                                                        специальности</h3>
+                                                                                </div>
+                                                                                <div class="panel-body">
+                                                                                    <form class="form-horizontal"
+                                                                                          action="admin/addSpeciality"
+                                                                                          id="speciality_edit"
+                                                                                          method="post"
+                                                                                          accept-charset="windows1251"
+                                                                                          role="form">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-md-2 control-label">Название
+                                                                                                специальности</label>
+                                                                                            <div class="col-md-10">
+                                                                                                <input type="text"
+                                                                                                       class="form-control"
+                                                                                                       placeholder="Названиме"
+                                                                                                       name="speciality_name">
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-sm-2 control-label">Факультет</label>
+                                                                                            <div class="col-sm-10">
+                                                                                                <select id="fac"
+                                                                                                        class="form-control"
+                                                                                                        name="idFaculty">
+                                                                                                    <c:forEach
+                                                                                                            items="${faculties}"
+                                                                                                            var="item">
+                                                                                                        <option value="${item.getIdFaculty()}">${item.getFaculty_name()}</option>
+                                                                                                    </c:forEach>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <input type="hidden"
+                                                                                               name="${_csrf.parameterName}"
+                                                                                               value="${_csrf.token}"/>
+
+                                                                                        <button type="submit"
+                                                                                                class="btn btn-purple">
+                                                                                            Применить
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>

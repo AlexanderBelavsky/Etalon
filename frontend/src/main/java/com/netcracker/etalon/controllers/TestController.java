@@ -22,15 +22,9 @@
  * All rights reserved.
  */
 package com.netcracker.etalon.controllers;
-import com.netcracker.devschool.dev4.etalon.entity.Head_of_practice;
-import com.netcracker.devschool.dev4.etalon.entity.Student;
-import com.netcracker.devschool.dev4.etalon.entity.User;
-import com.netcracker.devschool.dev4.etalon.entity.User_role;
+import com.netcracker.devschool.dev4.etalon.entity.*;
 import com.netcracker.devschool.dev4.etalon.repository.UserRepository;
-import com.netcracker.devschool.dev4.etalon.service.FacultyService;
-import com.netcracker.devschool.dev4.etalon.service.Head_of_practiceService;
-import com.netcracker.devschool.dev4.etalon.service.StudentService;
-import com.netcracker.devschool.dev4.etalon.service.UserService;
+import com.netcracker.devschool.dev4.etalon.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -72,6 +66,9 @@ public class TestController {
 
     @Autowired
     private FacultyService facultyService;
+
+    @Autowired
+    private SpecialityService specialityService;
 
     @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
     public ModelAndView defaultPage() {
@@ -161,8 +158,13 @@ public class TestController {
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String pageAdmin() {
-        return "admin";
+    public ModelAndView pageAdmin() {
+        ModelAndView model = new ModelAndView();
+        model.addObject("faculties",facultyService.findAll());
+        model.addObject("specialities",specialityService.findAll());
+        List<Faculty> list = facultyService.findAll();
+        model.setViewName("admin");
+        return model;
     }
 
     //for 403 access denied page
