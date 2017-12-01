@@ -1,6 +1,7 @@
 package com.netcracker.devschool.dev4.etalon.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -8,8 +9,18 @@ import javax.persistence.Table;
 @Table(name = "requests")
 public class Requests {
     @Id
+    @GeneratedValue
+    private int id;
     private int idStudent;
     private int idRequest;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getIdStudent() {
         return idStudent;

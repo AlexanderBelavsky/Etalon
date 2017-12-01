@@ -3,26 +3,22 @@ package com.netcracker.devschool.dev4.etalon.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "practice")
 public class Practice {
     @Id
-    private int idpractice;
     private int idrequest;
     private String name_of_practice;
     private long idhead_of_practice;
+    private double minAvg;
     private String company;
     private String department;
-    private String data;
-
-    public int getIdpractice() {
-        return idpractice;
-    }
-
-    public void setIdpractice(int idpractice) {
-        this.idpractice = idpractice;
-    }
+    private int idFaculty;
+    private int idSpeciality;
+    private Date start;
+    private Date finish;
 
     public int getIdrequest() {
         return idrequest;
@@ -64,12 +60,44 @@ public class Practice {
         this.department = department;
     }
 
-    public String getData() {
-        return data;
+    public double getMinAvg() {
+        return minAvg;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setMinAvg(double minAvg) {
+        this.minAvg = minAvg;
+    }
+
+    public int getIdFaculty() {
+        return idFaculty;
+    }
+
+    public void setIdFaculty(int idFaculty) {
+        this.idFaculty = idFaculty;
+    }
+
+    public int getIdSpeciality() {
+        return idSpeciality;
+    }
+
+    public void setIdSpeciality(int idSpeciality) {
+        this.idSpeciality = idSpeciality;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getFinish() {
+        return finish;
+    }
+
+    public void setFinish(Date finish) {
+        this.finish = finish;
     }
 }
 
