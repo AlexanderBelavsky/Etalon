@@ -162,6 +162,7 @@ public class TestController {
         ModelAndView model = new ModelAndView();
         model.addObject("faculties",facultyService.findAll());
         model.addObject("specialities",specialityService.findAll());
+        model.addObject("hops",headOfPracticeService.findAll());
         List<Faculty> list = facultyService.findAll();
         model.setViewName("admin");
         return model;

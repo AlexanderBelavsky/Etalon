@@ -14,6 +14,10 @@
     <jsp:include page="/jsp/blocks/header1.jsp"/>
     <script>
         function adminPageInit() {
+            $('#faculties').on('change', function () {
+                refreshSpecialities(this.value, 0);
+            });
+            refreshSpecialities(1, 0);
             $('#tfaculty').DataTable({
                 //"processing": true,
                 //"serverSide": true,
@@ -53,6 +57,35 @@
                         $('#success').css('display', 'block');
                     } else {
                         $('#error').css('display', 'block');
+                    }
+                }
+            });
+            $('#add_Request').ajaxForm({
+                dataType: 'json',
+                success: function (data) {
+                    if (data) {
+                        $('#faculty').text($("#faculties option[value='" + data.idFaculty + "']").text());
+                        $('#success').css('display', 'block');
+                    } else {
+                        $('#error').css('display', 'block');
+                    }
+                }
+            });
+        }
+
+        function refreshSpecialities(id, val) {
+            $.ajax({
+                url: 'university/getSpecialitiesByFacultyId/' + id,
+                dataType: 'json',
+                success: function (data) {
+                    $('#specs').find('option').remove();
+                    var options = "";
+                    $.each(data, function (index, value) {
+                        options += '<option value="' + value.idSpeciality + '">' + value.speciality_name + '</option>';
+                    });
+                    $('#specs').html(options);
+                    if (val) {
+                        $('#specs').val(val);
                     }
                 }
             });
@@ -482,11 +515,13 @@
                                                             <tr>
                                                                 <td>${item.getFaculty_name()}</td>
                                                                 <td>
-                                                                    <a href=" <c:url value='/admin/deleteFaculty/${item.getIdFaculty()}'/> "><button
-                                                                            type="button"
-                                                                            class="btn btn-block btn-danger">
-                                                                        Удалить
-                                                                    </button></a>
+                                                                    <a href=" <c:url value='/admin/deleteFaculty/${item.getIdFaculty()}'/> ">
+                                                                        <button
+                                                                                type="button"
+                                                                                class="btn btn-block btn-danger">
+                                                                            Удалить
+                                                                        </button>
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -581,11 +616,13 @@
                                                                 <td>${spec.getSpeciality_name()}</td>
                                                                 <td>${faculties.stream().filter(faculty -> faculty.getIdFaculty()==spec.getIdFaculty()).findFirst().get().getFaculty_name()}</td>
                                                                 <td>
-                                                                    <a href=" <c:url value='/admin/deleteSpeciality/${spec.getIdSpeciality()}'/> "><button
-                                                                            type="button"
-                                                                            class="btn btn-block btn-danger">
-                                                                        Удалить
-                                                                    </button></a>
+                                                                    <a href=" <c:url value='/admin/deleteSpeciality/${spec.getIdSpeciality()}'/> ">
+                                                                        <button
+                                                                                type="button"
+                                                                                class="btn btn-block btn-danger">
+                                                                            Удалить
+                                                                        </button>
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -683,76 +720,63 @@
                                             <h3 class="panel-title" align="center">Добавить заяку</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <form class="form-horizontal" role="form">
-                                                <h4 align="center">Личные данные руководителя практики</h4>
-                                                <div class="form-group">
-                                                    <label class="col-md-2 control-label">Имя</label>
-                                                    <div class="col-md-10">
-                                                        <input type="text" class="form-control" placeholder="Имя">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-2 control-label">Фамилия</label>
-                                                    <div class="col-md-10">
-                                                        <input type="text" class="form-control" placeholder="Фамилия">
-                                                    </div>
-                                                </div>
+                                            <form class="form-horizontal" id="add_Request" action="practice/addRequest"
+                                                  method="post" role="form">
                                                 <h4 align="center">Данные о практике</h4>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Руководитель практики</label>
+                                                    <div class="col-sm-10">
+                                                        <select id="hop" class="form-control" name="idhead_of_practice">
+                                                            <c:forEach items="${hops}" var="hop">
+                                                                <option value="${hop.getIdhead_of_practice()}">${hop.getFirst_name()}${hop.getLast_name()}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
                                                     <label class="col-md-2 control-label">Название практики</label>
                                                     <div class="col-md-10">
-                                                        <input type="text" class="form-control" placeholder="Название">
+                                                        <input type="text" class="form-control" placeholder="Название"
+                                                               name="name_of_practice">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-2 control-label">Название предприятие</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control"
-                                                               placeholder="Предприятие">
+                                                               placeholder="Предприятие" name="company">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-2 control-label">Название отдела</label>
                                                     <div class="col-md-10">
-                                                        <input type="text" class="form-control" placeholder="Отдел">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Университет</label>
-                                                    <div class="col-sm-10">
-                                                        <select class="form-control">
-                                                            <option>БГУИР</option>
-                                                            <option>БГУ</option>
-                                                            <option>БНТУ</option>
-                                                            <option>БГАТУ</option>
-                                                            <option>БТУ</option>
-                                                        </select>
+                                                        <input type="text" class="form-control" placeholder="Отдел"
+                                                               name="department">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Факультет</label>
                                                     <div class="col-sm-10">
-                                                        <select class="form-control">
-                                                            <option>ФКП</option>
-                                                            <option>ФКСиС</option>
-                                                            <option>ФИТУ</option>
-                                                            <option>ФРЭ</option>
-                                                            <option>ИЭФ</option>
+                                                        <select id="faculties" class="form-control" name="faculty">
+                                                            <c:forEach items="${faculties}" var="fac">
+                                                                <option value="${fac.getIdFaculty()}">${fac.getFaculty_name()}</option>
+                                                            </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-2 control-label">Количество студентов</label>
-                                                    <div class="col-md-10">
-                                                        <input type="text" class="form-control"
-                                                               placeholder="Количество">
+                                                    <label class="col-sm-2 control-label">Специальность</label>
+                                                    <div class="col-sm-10">
+                                                        <select id="specs" name="speciality" class="form-control">
+
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Минимальный средний
                                                         балл</label>
                                                     <div class="col-sm-10">
-                                                        <select class="form-control">
+                                                        <select class="form-control" name="minAvg">
                                                             <option>4</option>
                                                             <option>5</option>
                                                             <option>6</option>
@@ -767,7 +791,7 @@
                                                     <h4 align="center">Начало практики</h4>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="mm/dd/yyyy"
-                                                               id="datepicker">
+                                                               id="datepicker" name="start">
                                                         <span class="input-group-addon"><i
                                                                 class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
@@ -776,11 +800,14 @@
                                                     <h4 align="center">Конец практики</h4>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="mm/dd/yyyy"
-                                                               id="datepicker-multiple">
+                                                               id="datepicker-multiple" name="finish">
                                                         <span class="input-group-addon"><i
                                                                 class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
                                                 </div>
+                                                <input type="hidden"
+                                                       name="${_csrf.parameterName}"
+                                                       value="${_csrf.token}"/>
                                                 <button type="submit" class="btn btn-purple">
                                                     Применить
                                                 </button>
