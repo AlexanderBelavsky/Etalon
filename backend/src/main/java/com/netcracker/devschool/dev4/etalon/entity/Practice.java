@@ -11,7 +11,7 @@ public class Practice {
     @Id
     private int idrequest;
     private String name_of_practice;
-    private long idhead_of_practice;
+    private int idhead_of_practice;
     private double minAvg;
     private String company;
     private String department;
@@ -36,11 +36,11 @@ public class Practice {
         this.name_of_practice = name_of_practice;
     }
 
-    public long getIdhead_of_practice() {
+    public int getIdhead_of_practice() {
         return idhead_of_practice;
     }
 
-    public void setIdhead_of_practice(long idhead_of_practice) {
+    public void setIdhead_of_practice(int idhead_of_practice) {
         this.idhead_of_practice = idhead_of_practice;
     }
 
