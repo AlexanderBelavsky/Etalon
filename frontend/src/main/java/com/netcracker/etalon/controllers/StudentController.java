@@ -2,8 +2,13 @@ package com.netcracker.etalon.controllers;
 
 import com.netcracker.devschool.dev4.etalon.entity.Student;
 import com.netcracker.devschool.dev4.etalon.form.StudentEdit;
+import com.netcracker.devschool.dev4.etalon.service.FacultyService;
+import com.netcracker.devschool.dev4.etalon.service.SpecialityService;
 import com.netcracker.devschool.dev4.etalon.service.StudentService;
+import com.netcracker.etalon.converters.StudentsConverter;
+import com.netcracker.etalon.converters.TableData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -21,6 +27,12 @@ import java.util.Objects;
 public class StudentController {
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private SpecialityService specialityService;
+
+    @Autowired
+    private FacultyService facultyService;
 
     //Save the uploaded file to this folder
 
@@ -79,5 +91,31 @@ public class StudentController {
     @ResponseBody
     public Student getStudent(@PathVariable int id) {
         return studentService.findById(id);
+    }
+
+    @RequestMapping(value = "/tableAllStudents", method = RequestMethod.GET)
+    @ResponseBody
+    private TableData returnTable(
+            @RequestParam(value = "start") String start,
+            @RequestParam(value = "length") String length,
+            @RequestParam(value = "draw") String draw,
+            @RequestParam(value = "search[value]", required = false) String key,
+            @RequestParam(value = "order[0][column]") String order,
+            @RequestParam(value = "order[0][dir]") String orderDir) {
+        if (key==null) key="";
+        TableData result = new TableData();
+        Page<Student> page = studentService.findByParams(-1, key, result.getColumnNameForTables(Integer.parseInt(order)), orderDir, Integer.parseInt(start), Integer.parseInt(length));
+        List<Student> list = page.getContent();
+        result.setRecordsTotal((int) page.getTotalElements() - page.getNumberOfElements());
+        result.setRecordsFiltered((int) page.getTotalElements() - page.getNumberOfElements());
+        result.setDraw(Integer.parseInt(draw));
+        StudentsConverter converter = new StudentsConverter();
+        for (Student item: list
+                ) {
+
+            result.addData(converter.studentToStringArrayAdvanced(item, facultyService.findById(item.getIdFaculty()).getFaculty_name(),
+                    specialityService.findById(item.getIdSpeciality()).getSpeciality_name(), true, true, true));
+        }
+        return result;
     }
 }
