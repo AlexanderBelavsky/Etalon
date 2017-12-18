@@ -39,6 +39,7 @@ public class PracticeServiceImpl implements PracticeService {
     @Override
     public void deletePracticeById(int id){
         practiceRepository.delete(id);
+        requestRepository.deleteRequestsByIdRequest(id);
     }
 
     @Override
@@ -99,5 +100,15 @@ public class PracticeServiceImpl implements PracticeService {
         assignment.setIdRequest(id);
         assignment.setIdStudent(studentId);
         return requestRepository.save(assignment);
+    }
+
+    @Override
+    public List<Practice> findAllPracticeForStudent(int idStudent) {
+        return requestRepository.findAllPracticeForStudent(idStudent);
+    }
+
+    @Override
+    public  void deletePracticeByIdHOP(int idhead_of_practice){
+        practiceRepository.deletePracticeByIdHOP(idhead_of_practice);
     }
 }

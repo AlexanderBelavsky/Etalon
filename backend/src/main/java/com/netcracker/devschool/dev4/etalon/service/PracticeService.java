@@ -26,4 +26,8 @@ public interface PracticeService {
     public Student removeFromPractice(int id, int studentId);
 
     Requests assign(int id, int studentId);
+
+    List<Practice> findAllPracticeForStudent(int idStudent);
+
+    void deletePracticeByIdHOP(int idhead_of_practice);
 }
