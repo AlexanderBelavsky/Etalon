@@ -32,6 +32,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUserById(int id) {
+        User_role deletedUser = userRolesRepository.findOne(id);
+
+        userRolesRepository.delete(deletedUser);
+        userRepository.deleteUserByUsername(deletedUser.getUsername());
+    }
+
+
+    @Override
     @Transactional
     public User delete(long id) throws Exception {
         User deletedUser = userRepository.findOne((int) id);
@@ -64,6 +73,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public int getIdByName(String name) {
         return userRolesRepository.findByUsername(name).getUser_role_id();
+    }
+
+    @Override
+    public void deleteUserByUsername(String username) {
+        userRepository.deleteUserByUsername(username);
     }
 }
 

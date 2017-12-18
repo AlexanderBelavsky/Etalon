@@ -9,6 +9,8 @@ import java.util.List;
 public interface UserService {
     User_role create(User user, User_role userRoles);
 
+    public void deleteUserById(int id);
+
     public User delete(long id) throws Exception;
 
     public List<User> findAll();
@@ -18,4 +20,6 @@ public interface UserService {
     public User findById(long id);
 
     public int getIdByName(String name);
+
+    void deleteUserByUsername(String username);
 }
