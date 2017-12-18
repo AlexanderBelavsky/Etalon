@@ -25,6 +25,7 @@ package com.netcracker.etalon.controllers;
 import com.netcracker.devschool.dev4.etalon.entity.*;
 import com.netcracker.devschool.dev4.etalon.repository.UserRepository;
 import com.netcracker.devschool.dev4.etalon.service.*;
+import com.netcracker.etalon.converters.RequestConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -69,6 +70,12 @@ public class TestController {
 
     @Autowired
     private SpecialityService specialityService;
+
+    @Autowired
+    private RequestConverter requestConverter;
+
+    @Autowired
+    private PracticeService practiceService;
 
     @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
     public ModelAndView defaultPage() {
@@ -130,6 +137,7 @@ public class TestController {
             model.addObject("name", student.getFirst_name() + " " + student.getLast_name());
             model.addObject("imageUrl", "images/" + student.getImageurl());
             model.addObject("id", student.getIdStudent());
+            model.addObject("listRequests",requestConverter.convert(practiceService.findAllPracticeForStudent(id)));
             model.addObject("faculties", facultyService.findAll());
         }
         model.setViewName("student");

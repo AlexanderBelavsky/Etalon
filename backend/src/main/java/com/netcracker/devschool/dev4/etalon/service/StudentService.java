@@ -15,7 +15,7 @@ public interface StudentService {
 
     public List<Student> findAll();
 
-    public Student update(Student student) throws Exception;
+    public Student update(Student student);
 
     public Student findById(int idStudent);
 

@@ -65,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public Student update(Student student) throws Exception {
+    public Student update(Student student){
         Student updated = studentRepository.findOne(student.getIdStudent());
         updated.setFirst_name(student.getFirst_name());
         updated.setLast_name(student.getLast_name());
