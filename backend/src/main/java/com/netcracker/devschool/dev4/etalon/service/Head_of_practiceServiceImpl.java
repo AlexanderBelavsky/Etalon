@@ -19,6 +19,11 @@ public class Head_of_practiceServiceImpl implements Head_of_practiceService {
     }
 
     @Override
+    public void deleteHead_of_practiceById(int id){
+        headOfPracticeRepository.delete(id);
+    }
+
+    @Override
     public Head_of_practice delete(int idhead_of_practice) throws Exception {
         Head_of_practice deleted = headOfPracticeRepository.findOne(idhead_of_practice);
         if (deleted == null) throw new Exception("Not found");

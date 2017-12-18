@@ -9,6 +9,8 @@ public interface Head_of_practiceService {
 
     public Head_of_practice delete(int idhead_of_practice) throws Exception;
 
+    public void deleteHead_of_practiceById(int id);
+
     public List<Head_of_practice> findAll();
 
     public Head_of_practice update(Head_of_practice headOfPractice) throws Exception;
