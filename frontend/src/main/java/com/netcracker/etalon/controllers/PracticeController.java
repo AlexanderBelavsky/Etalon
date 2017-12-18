@@ -226,6 +226,7 @@ public class PracticeController {
             User user = new User();
             user.setUsername(headOfPracticeForm.getUsername());
             String password = headOfPracticeForm.getPassword();
+            password = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
             user.setPassword(password);
             user.setEnabled(1);
             User_role userRoles = new User_role();

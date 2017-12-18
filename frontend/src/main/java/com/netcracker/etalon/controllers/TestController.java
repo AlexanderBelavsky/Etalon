@@ -218,7 +218,7 @@ public class TestController {
                                         @RequestParam(value = "password") String password) {
         User user = new User();
         user.setUsername(username);
-        // password = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
+        password = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
         user.setPassword(password);
         user.setEnabled(1);
         User_role userRoles = new User_role();
@@ -242,52 +242,4 @@ public class TestController {
         return modelAndView;
     }
 
-   /* @RequestMapping(value = "/users-view", method = RequestMethod.GET)
-    public ModelAndView getUsersAsModelWithView() {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        modelAndView.addObject("users", getStubUsers());
-        return modelAndView;
-    }
-    @RequestMapping(value = "/usersAsJson", method = RequestMethod.GET)
-    @ResponseBody
-    public List<UserViewModel> getUsersAsJson() {
-        return getStubUsers();
-    }
-
-    private List<UserViewModel> getStubUsers() {
-        List<UserViewModel> userViewModels = new ArrayList<>();
-        UserViewModel userViewModelIvan  = new UserViewModel();
-        userViewModelIvan.setId("113");
-        userViewModelIvan.setName("Ivan");
-        UserViewModel userViewModelLeopold = new UserViewModel();
-        userViewModelLeopold.setId("114");
-        userViewModelLeopold.setName("Leopold");
-        userViewModels.add(userViewModelIvan);
-        userViewModels.add(userViewModelLeopold);
-        return userViewModels;
-    }*/
-
-
 }
-/*
- WITHOUT LIMITING THE FOREGOING, COPYING, REPRODUCTION, REDISTRIBUTION,
- REVERSE ENGINEERING, DISASSEMBLY, DECOMPILATION OR MODIFICATION
- OF THE SOFTWARE IS EXPRESSLY PROHIBITED, UNLESS SUCH COPYING,
- REPRODUCTION, REDISTRIBUTION, REVERSE ENGINEERING, DISASSEMBLY,
- DECOMPILATION OR MODIFICATION IS EXPRESSLY PERMITTED BY THE LICENSE
- AGREEMENT WITH NETCRACKER. 
- 
- THIS SOFTWARE IS WARRANTED, IF AT ALL, ONLY AS EXPRESSLY PROVIDED IN
- THE TERMS OF THE LICENSE AGREEMENT, EXCEPT AS WARRANTED IN THE
- LICENSE AGREEMENT, NETCRACKER HEREBY DISCLAIMS ALL WARRANTIES AND
- CONDITIONS WITH REGARD TO THE SOFTWARE, WHETHER EXPRESS, IMPLIED
- OR STATUTORY, INCLUDING WITHOUT LIMITATION ALL WARRANTIES AND
- CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
- TITLE AND NON-INFRINGEMENT.
- 
- Copyright (c) 1995-2017 NetCracker Technology Corp.
- 
- All Rights Reserved.
-*/

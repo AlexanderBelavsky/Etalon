@@ -18,20 +18,10 @@
             <h3 class="text-center m-t-10"> Регистрация студента на практику </h3>
         </div>
 
-        <form class="form-horizontal m-t-40" action="/loginnew" method="post">
-            <div class="form-group ">
+        <form class="form-horizontal m-t-40" action="/register" method="post">
+            <div class="form-group">
                 <div class="col-xs-12">
-                    <input class="form-control " type="text" required="" placeholder="Имя">
-                </div>
-            </div>
-            <div class="form-group ">
-                <div class="col-xs-12">
-                    <input class="form-control " type="text" required="" placeholder="Фамилия">
-                </div>
-            </div>
-                        <div class="form-group">
-                <div class="col-xs-12">
-                    <input class="form-control" type="email" required="" name="email" placeholder="Email">
+                    <input class="form-control" type="email" required="" name="username" placeholder="Email">
                 </div>
             </div>
             <div class="form-group ">
@@ -50,13 +40,22 @@
 
             <div class="form-group text-right">
                 <div class="col-xs-12">
+                    <input type="hidden" name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
                     <button class="btn btn-primary w-md" type="submit">Зарегестрироваться</button>
                 </div>
             </div>
 
 
         </form>
+        <div class="form-horizontal m-t-0">
+            <div class="form-group text-right">
+                <div class="col-xs-12">
+                    <a href="/login"><p>Я уже зарегестрирован</p></a>
+                </div>
+            </div>
 
+        </div>
     </div>
 </div>
 </body>
