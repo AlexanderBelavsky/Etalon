@@ -1,16 +1,22 @@
 package com.netcracker.devschool.dev4.etalon.service;
 
 import com.netcracker.devschool.dev4.etalon.entity.Speciality;
+import com.netcracker.devschool.dev4.etalon.entity.Student;
 import com.netcracker.devschool.dev4.etalon.repository.SpecialityRepository;
+import com.netcracker.devschool.dev4.etalon.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.swing.*;
 import java.util.List;
 
 @Service
 public class SpecialityServiceImpl implements SpecialityService {
     @Resource
     private SpecialityRepository specialityRepository;
+
+    @Resource
+    private StudentRepository studentRepository;
 
     @Override
     public Speciality create(Speciality speciality) {
@@ -19,7 +25,12 @@ public class SpecialityServiceImpl implements SpecialityService {
 
     @Override
     public void deleteSpecialityById(int id){
-        specialityRepository.delete(id);
+        List<Student> students = studentRepository.findStudentByIdSpeciality(id);
+        if (students.isEmpty()) {
+            specialityRepository.delete(id);
+        } else {
+            JOptionPane.showMessageDialog(null, "Переведите всех студентов с этой специальности на другой факультет или специальность!");
+        }
     }
 
     @Override
