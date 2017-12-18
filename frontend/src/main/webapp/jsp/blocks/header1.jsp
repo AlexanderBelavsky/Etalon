@@ -29,6 +29,8 @@
 <link href="resources/css/libs/animate.css" rel="stylesheet" type="text/css" media="all"/>
 <!--Morris Chart CSS -->
 <link href="resources/css/libs/morris.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- iCheck -->
+<link rel="stylesheet" href="resources/css/libs/purple.css">
 <!-- DataTables -->
 <link href="resources/css/libs/jquery.dataTables.min.css" rel="stylesheet" type="text/css" media="all"/>
 <!-- sweet alerts -->
@@ -58,6 +60,7 @@
 <script src="resources/js/libs/jquery.dataTables.min.js"></script>
 <script src="resources/js/libs/dataTables.bootstrap.js"></script>
 <script src="resources/js/libs/jquery.form.min.js"></script>
+<script src="resources/js/libs/icheck.min.js"></script>
 
 
 

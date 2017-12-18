@@ -25,7 +25,9 @@ package com.netcracker.etalon.controllers;
 import com.netcracker.devschool.dev4.etalon.entity.*;
 import com.netcracker.devschool.dev4.etalon.repository.UserRepository;
 import com.netcracker.devschool.dev4.etalon.service.*;
+import com.netcracker.etalon.beans.SpecialityViewModel;
 import com.netcracker.etalon.converters.RequestConverter;
+import com.netcracker.etalon.converters.SpecialityConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,7 +60,6 @@ public class TestController {
     @Autowired
     private UserService userService;
 
-
     @Autowired
     private StudentService studentService;
 
@@ -76,6 +77,9 @@ public class TestController {
 
     @Autowired
     private PracticeService practiceService;
+
+    @Autowired
+    private SpecialityConverter specialityConverter;
 
     @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
     public ModelAndView defaultPage() {
@@ -159,6 +163,7 @@ public class TestController {
             model.addObject("company", headOfPractice.getCompany());
             model.addObject("id", headOfPractice.getIdhead_of_practice());
             model.addObject("faculties", facultyService.findAll());
+            model.addObject("practices", practiceService.findByHopId(id));
         }
         model.setViewName("head_of_practice");
         return model;
@@ -170,6 +175,7 @@ public class TestController {
         ModelAndView model = new ModelAndView();
         model.addObject("faculties",facultyService.findAll());
         model.addObject("specialities",specialityService.findAll());
+        model.addObject("listSpecialities",new ArrayList<SpecialityViewModel>(specialityConverter.convert(specialityService.findAll())));
         model.addObject("hops",headOfPracticeService.findAll());
         List<Faculty> list = facultyService.findAll();
         model.setViewName("admin");
