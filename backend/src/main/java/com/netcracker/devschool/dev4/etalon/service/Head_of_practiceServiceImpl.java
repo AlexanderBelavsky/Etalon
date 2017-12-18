@@ -37,7 +37,7 @@ public class Head_of_practiceServiceImpl implements Head_of_practiceService {
     }
 
     @Override
-    public Head_of_practice update(Head_of_practice headOfPractice) throws Exception {
+    public Head_of_practice update(Head_of_practice headOfPractice){
         Head_of_practice updated = headOfPracticeRepository.findOne(headOfPractice.getIdhead_of_practice());
         updated.setFirst_name(headOfPractice.getFirst_name());
         updated.setLast_name(headOfPractice.getLast_name());

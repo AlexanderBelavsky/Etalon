@@ -13,7 +13,7 @@ public interface Head_of_practiceService {
 
     public List<Head_of_practice> findAll();
 
-    public Head_of_practice update(Head_of_practice headOfPractice) throws Exception;
+    public Head_of_practice update(Head_of_practice headOfPractice);
 
     public Head_of_practice findById(int idhead_of_practice);
 
