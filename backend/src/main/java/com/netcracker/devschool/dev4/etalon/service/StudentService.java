@@ -11,6 +11,8 @@ public interface StudentService {
 
     public Student delete(int idStudent) throws Exception;
 
+    public void deleteStudentById(int id);
+
     public List<Student> findAll();
 
     public Student update(Student student) throws Exception;

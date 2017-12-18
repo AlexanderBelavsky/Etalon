@@ -1,6 +1,8 @@
 package com.netcracker.devschool.dev4.etalon.service;
 
+import com.netcracker.devschool.dev4.etalon.entity.Practice;
 import com.netcracker.devschool.dev4.etalon.entity.Student;
+import com.netcracker.devschool.dev4.etalon.repository.RequestRepository;
 import com.netcracker.devschool.dev4.etalon.repository.StudentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,11 +20,29 @@ public class StudentServiceImpl implements StudentService {
     @Resource
     private StudentRepository studentRepository;
 
+    @Resource
+    private RequestRepository requestRepository;
+
+    @Resource
+    private PracticeService practiceService;
+
     @Override
     @Transactional
     public Student create(Student student) {
         Student createdStudent = student;
         return studentRepository.save(createdStudent);
+    }
+
+    @Override
+    public void deleteStudentById(int id) {
+
+        List<Practice> allPractice = practiceService.findAllPracticeForStudent(id);
+        if (allPractice.isEmpty()) {
+            studentRepository.delete(id);
+        } else {
+            studentRepository.delete(id);
+            requestRepository.deleteBySid(id);
+        }
     }
 
     @Override
@@ -75,7 +95,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Page<Student> findByParams(int practiceId, String searchKey, String sortBy, String order, int start, int length) {
-        PageRequest pageR = new PageRequest(start/length, length, Sort.Direction.fromString(order), sortBy);
+        PageRequest pageR = new PageRequest(start / length, length, Sort.Direction.fromString(order), sortBy);
         Page<Student> result;
         if (practiceId!=-1) {
             result = studentRepository.findWithPracticeId(practiceId, searchKey, pageR);
