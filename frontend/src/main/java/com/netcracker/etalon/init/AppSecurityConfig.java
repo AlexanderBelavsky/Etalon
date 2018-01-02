@@ -1,4 +1,4 @@
-package com.netcracker.devschool.dev4.etalon.init;
+package com.netcracker.etalon.init;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

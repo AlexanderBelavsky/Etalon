@@ -1,7 +1,7 @@
 package com.netcracker.etalon.controllers;
 
 import com.netcracker.devschool.dev4.etalon.entity.Student;
-import com.netcracker.devschool.dev4.etalon.form.StudentEdit;
+import com.netcracker.etalon.form.StudentEdit;
 import com.netcracker.devschool.dev4.etalon.service.FacultyService;
 import com.netcracker.devschool.dev4.etalon.service.SpecialityService;
 import com.netcracker.devschool.dev4.etalon.service.StudentService;
@@ -20,7 +20,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/students")

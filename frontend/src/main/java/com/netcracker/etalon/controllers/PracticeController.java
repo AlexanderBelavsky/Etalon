@@ -1,7 +1,7 @@
 package com.netcracker.etalon.controllers;
 
 import com.netcracker.devschool.dev4.etalon.entity.*;
-import com.netcracker.devschool.dev4.etalon.form.HeadOfPracticeForm;
+import com.netcracker.etalon.form.HeadOfPracticeForm;
 import com.netcracker.devschool.dev4.etalon.service.*;
 import com.netcracker.etalon.beans.RequestsViewModel;
 import com.netcracker.etalon.converters.RequestConverter;

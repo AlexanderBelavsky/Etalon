@@ -1,4 +1,4 @@
-package com.netcracker.devschool.dev4.etalon.form;
+package com.netcracker.etalon.form;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

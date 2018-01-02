@@ -1,7 +1,7 @@
 package com.netcracker.etalon.controllers;
 
 import com.netcracker.devschool.dev4.etalon.entity.Head_of_practice;
-import com.netcracker.devschool.dev4.etalon.form.HopEdit;
+import com.netcracker.etalon.form.HopEdit;
 import com.netcracker.devschool.dev4.etalon.service.Head_of_practiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/hops")

@@ -1,4 +1,4 @@
-package com.netcracker.devschool.dev4.etalon.init;
+package com.netcracker.etalon.init;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
