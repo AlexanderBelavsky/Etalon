@@ -137,8 +137,8 @@
                     $('#faculty').text($("#faculties option[value='" + data.idFaculty + "']").text());
                     $('#company').text(data.company);
                     $('#department').text(data.department);
-                    $('input[name=fname]').val(data.first_name);
-                    $('input[name=lname]').val(data.last_name);
+                    $('input[name=first_name]').val(data.first_name);
+                    $('input[name=last_name]').val(data.last_name);
                     $('input[name=company]').val(data.company);
                     //if (data.isBudget) $('input[name=isBudget]').iCheck('toggle');
                     $('input[name=department]').val(data.department);
@@ -252,6 +252,13 @@
                         else {
                             $('.selectall').prop('checked', false).iCheck('update');
                         }
+                        if (selected.length > 0) {
+                            $('#req').attr('class', 'btn btn-purple');
+
+                        }
+                        else {
+                            $('#req').attr('class', 'btn btn-purple disabled');
+                        }
                     });
                     if ($('#tstudents').find('input[type="checkbox"]').not('.selectall').length === $('#tstudents').find('input[type="checkbox"]:checked').not('.selectall').length) {
                         $('.selectall').prop('checked', true).iCheck('update');
@@ -259,6 +266,7 @@
                     else {
                         $('.selectall').prop('checked', false).iCheck('update');
                     }
+                    $('#req').attr('class', 'btn btn-purple disabled');
 
                 }
             });
@@ -370,6 +378,14 @@
                     modal.find('#p_minavg').text("Мин. ср. балл: " + data.minAvg);
                     modal.find('#p_daterange').text("Дата: " + data.start + " - " + data.finish);
                     modal.modal();
+                }
+            })
+        }
+
+        function drawTable() {
+            $.ajax({
+                success: function () {
+                    oTable.draw()
                 }
             })
         }
@@ -608,7 +624,7 @@
                                     <input type="hidden" name="${_csrf.parameterName}"
                                            value="${_csrf.token}"/>
                                     <button type="submit"
-                                            class="btn btn-purple">
+                                            class="btn btn-purple" id="req" onclick="drawTable()">
                                         Применить
                                     </button>
                                 </form>

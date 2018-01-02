@@ -1,6 +1,7 @@
 package com.netcracker.devschool.dev4.etalon.service;
 
 import com.netcracker.devschool.dev4.etalon.entity.Head_of_practice;
+import com.netcracker.devschool.dev4.etalon.entity.Practice;
 import com.netcracker.devschool.dev4.etalon.repository.Head_of_practiceRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ public class Head_of_practiceServiceImpl implements Head_of_practiceService {
     @Resource
     private Head_of_practiceRepository headOfPracticeRepository;
 
+    @Resource
+    private PracticeService practiceService;
+
 
     @Override
     public Head_of_practice create(Head_of_practice headOfPractice) {
@@ -20,7 +24,16 @@ public class Head_of_practiceServiceImpl implements Head_of_practiceService {
 
     @Override
     public void deleteHead_of_practiceById(int id){
-        headOfPracticeRepository.delete(id);
+        List<Practice> practices = practiceService.findByHopId(id);
+        if(practices.isEmpty()){
+            headOfPracticeRepository.delete(id);
+        }else {
+            for (Practice item: practices
+                    ){
+                practiceService.deletePracticeById(item.getIdrequest());
+            }
+            headOfPracticeRepository.delete(id);
+        }
     }
 
     @Override

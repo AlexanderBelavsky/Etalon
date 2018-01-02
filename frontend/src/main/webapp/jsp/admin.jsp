@@ -299,6 +299,14 @@
                         else {
                             $('.selectall').prop('checked', false).iCheck('update');
                         }
+                        if (selected.length > 0) {
+                            $('#delBut_0').attr('class', 'btn btn-danger');
+
+                        }
+                        else {
+                            $('#delBut_0').attr('class', 'btn btn-danger disabled');
+
+                        }
                     });
                     if ($('#tstudents').find('input[type="checkbox"]').not('.selectall').length === $('#tstudents').find('input[type="checkbox"]:checked').not('.selectall').length) {
                         $('.selectall').prop('checked', true).iCheck('update');
@@ -306,26 +314,8 @@
                     else {
                         $('.selectall').prop('checked', false).iCheck('update');
                     }
-                    /* cb.on('ifChanged', function () {
-                         var id = this.id;
-                         var index = $.inArray(id, prselected[value.idStudent]);
+                    $('#delBut_0').attr('class', 'btn btn-danger disabled');
 
-                         if (index === -1) {
-                             prselected[value.idStudent].push(id);
-                         } else {
-                             prselected[value.idStudent].splice(index, 1);
-                         }
-
-                         if (prselected[value.idStudent].length > 0) {
-                             $('#delBut_0').attr('class', 'btn btn-danger');
-                         }
-                         else {
-                             $('#delBut_0').attr('class', 'btn btn-danger disabled');
-                         }
-                     });
-                     if ($.inArray(cb.attr('id'), prselected[value.idStudent]) !== -1) {
-                         cb.iCheck('check');
-                     }*/
                 }
             });
 
@@ -1093,7 +1083,7 @@
                             <label>Группа</label>
                             <input data-validation="length number" data-validation-length="6"
                                    data-validation-error-msg="Группа должна быть шестизначным числом"
-                                   type="text" class="form-control" placeholder="Группа" name="group_number">
+                                   type="number" class="form-control" placeholder="Группа" name="group_number">
                         </div>
 
                         <div class="form-group">
@@ -1109,7 +1099,7 @@
                             <label>Средний балл</label>
                             <input data-validation="number" data-validation-allowing="range[4.0;10.0],float"
                                    data-validation-error-msg="Значение выходит за диапазон возможных оценок"
-                                   type="text" class="form-control" placeholder="Балл" name="av_score">
+                                   type="number" class="form-control" placeholder="Балл" name="av_score">
                         </div>
                         <input type="hidden" name="${_csrf.parameterName}"
                                value="${_csrf.token}"/>

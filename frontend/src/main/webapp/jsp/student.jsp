@@ -61,12 +61,12 @@
                     $('#faculty').text($("#faculties option[value='" + data.idFaculty + "']").text());
                     $('#group').text(data.group_number);
                     $('#avgScore').text(data.av_score);
-                    $('input[name=fname]').val(data.first_name);
-                    $('input[name=lname]').val(data.last_name);
-                    $('input[name=group]').val(data.group_number);
+                    $('input[name=first_name]').val(data.first_name);
+                    $('input[name=last_name]').val(data.last_name);
+                    $('input[name=group_number]').val(data.group_number);
                     //if (data.isBudget) $('input[name=isBudget]').iCheck('toggle');
                     $('input[name=form_of_Education]').val(data.form_of_Education);
-                    $('input[name=avgScore]').val(data.av_score);
+                    $('input[name=av_score]').val(data.av_score);
                 }
             });
             $('#student_edit').ajaxForm({
@@ -200,7 +200,7 @@
                                 <div class="col-md-10">
                                     <input data-validation="length number" data-validation-length="6"
                                            data-validation-error-msg="Группа должна быть шестизначным числом"
-                                           type="text" class="form-control" placeholder="Группа" name="group_number">
+                                           type="number" class="form-control" placeholder="Группа" name="group_number">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -217,7 +217,7 @@
                                 <div class="col-md-10">
                                     <input data-validation="number" data-validation-allowing="range[4.0;10.0],float"
                                            data-validation-error-msg="Значение выходит за диапазон возможных оценок"
-                                           type="text" class="form-control" placeholder="Балл" name="av_score">
+                                           type="number" class="form-control" placeholder="Балл" name="av_score">
                                 </div>
                             </div>
                             <input type="hidden" name="${_csrf.parameterName}"
